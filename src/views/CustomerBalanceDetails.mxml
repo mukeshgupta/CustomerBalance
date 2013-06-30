@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" title="Balance Details">
+
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			
+			import spark.events.IndexChangeEvent;
+			
+			
+			[Bindable]
+			protected var actions:ArrayCollection;
+			
+			[Bindable]private var transHistory:ArrayCollection = new ArrayCollection([
+				{type:"credit",billAmount:"100",billDate:"05/27/2013 19:42",balance:'100',paidAmount:'0'},
+				{type:"credit",billAmount:"100",billDate:"05/28/2013 19:42",balance:'200',paidAmount:'0'},
+				{type:"credit",billAmount:"100",billDate:"05/29/2013 19:42",balance:'300',paidAmount:'0'},
+				{type:"credit",billAmount:"100",billDate:"05/30/2013 19:42",balance:'400',paidAmount:'0'}
+			]);
+			
+			[Embed("assets/sms.png")]
+			private var smsIcon:Class;
+			
+			[Embed("assets/phone.png")]
+			private var phoneIcon:Class;
+			
+			[Embed("assets/mail.png")]
+			private var mailIcon:Class;
+
+			
+			override public function set data(value:Object):void
+			{
+				super.data = value;
+				actions = new ArrayCollection();
+				
+				/*if (data.officePhone)
+				{
+					actions.addItem({type: "tel", name: "Call office", 
+						details: data.officePhone, icon:phoneIcon});
+				}
+				if (data.cellPhone)
+				{
+					actions.addItem({type: "tel", name: "Call mobile", 
+						details: data.cellPhone, icon:phoneIcon});
+					actions.addItem({type: "sms", name: "SMS", 
+						details: data.cellPhone, icon:smsIcon});
+				}
+				if (data.email)
+				{
+					actions.addItem({type: "mailto", name: "Email", 
+						details: data.email, icon:mailIcon});
+				}
+				if (data.manager)
+				{
+					actions.addItem({type: "employee", name: "View manager", 
+						details: data.manager.firstName + " " + data.manager.lastName, employee: data.manager});
+				}
+				if (data.directReports && data.directReports.length > 0)
+				{
+					actions.addItem({type: "reports", name: "View direct reports", 
+						details: "(" + data.directReports.length + ")",	
+						employee: data});
+				}*/
+			}
+			
+			protected function list_changeHandler(event:IndexChangeEvent):void
+			{
+				/*var action:Object = list.selectedItem;
+				switch (action.type)
+				{
+					case "tel":
+						navigateToURL(new URLRequest("tel:"+action.details));
+						break;
+					
+					case "sms":
+						navigateToURL(new URLRequest("sms:"+action.details));
+						break;
+					
+					case "mailto":
+						navigateToURL(new URLRequest("mailto:"+action.details));
+						break;
+					case "employee":
+						navigator.pushView(EmployeeDetails, action.employee);
+						break;
+					
+					case "reports":
+						navigator.pushView(DirectReports, action.employee);
+						break;
+
+				}					*/
+			}
+			
+			
+			protected function addCustomerBalanceEntry():void
+			{
+				navigator.pushView(BalanceEntry);
+			}
+			
+		]]>
+	</fx:Script>
+	<s:navigationContent>
+		<s:Button label="Back" click="{navigator.pushView(CustomerDirectoryHomeView)}"/>
+	</s:navigationContent>
+	<s:actionContent>
+		<s:Button label="Add" click="{addCustomerBalanceEntry();}"/>
+	</s:actionContent>
+	
+	<s:HGroup verticalAlign="middle" gap="12" paddingLeft="2" paddingTop="2" paddingRight="2" paddingBottom="2">
+		
+		<!--<s:Image source="assets/pics/{data.picture}"/>-->
+		
+		<s:VGroup>
+			<s:Label text="{data.firstName} {data.lastName}"/>
+			<s:Label text="{data.title}"/>
+			<s:Label text="{data.balance}"/>
+		</s:VGroup>
+		
+	</s:HGroup>
+	
+	<s:List id="list" dataProvider="{transHistory}" 
+			top="160" left="0" right="0" bottom="0"
+			><!--change="list_changeHandler(event)"-->
+		<s:itemRenderer>
+			<fx:Component>
+				<s:IconItemRenderer
+					paddingTop="8" paddingBottom="8" verticalGap="6"
+					labelField="balance" 
+					messageField="billDate" 
+					/><!--decorator="{data.icon}"-->
+			</fx:Component>
+		</s:itemRenderer>
+	</s:List>
+
+</s:View>

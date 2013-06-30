@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" title="HomeView" xmlns:dao="dao.*" >
+	<fx:Script>
+		<![CDATA[
+			import dao.Customer;
+			
+			import mx.collections.ArrayCollection;
+			private var customers:ArrayCollection = new ArrayCollection([
+				{id:1,firstName:'Mukesh',lastName:'Gupta',title:'Mukesh',officePhone:'',cellPhone:'',picture:'',balance:'100'},
+				{id:2,firstName:'Nitin',lastName:'Gupta',title:'Baba',officePhone:'',cellPhone:'',picture:'',balance:'100'},
+				{id:3,firstName:'Arvind',lastName:'Gupta',title:'Bunty Bhai',officePhone:'',cellPhone:'',picture:'',balance:'100'},
+				{id:4,firstName:'Leena',lastName:'Gupta',title:'Leena Optics',officePhone:'',cellPhone:'',picture:'',balance:'100'}
+			]);
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<dao:EmployeeDAO id="srv"/>
+	</fx:Declarations>
+	
+	<s:navigationContent/>
+	
+	<s:titleContent>
+		<s:TextInput id="key" width="100%"/>
+	</s:titleContent>
+
+	<s:actionContent>
+		<s:Button icon="@Embed('assets/search.png')" click="{navigator.pushView(CustomerDetails,new Customer())}" /><!--click="data=srv.findByName(key.text)"-->  
+		<s:Button icon="@Embed('assets/search.png')" /><!--click="data=srv.findByName(key.text)"-->  
+	</s:actionContent> 
+	
+	<s:List id="list" top="0" bottom="0" left="0" right="0" 
+			dataProvider="{customers}"
+			change="navigator.pushView(CustomerBalanceDetails, list.selectedItem)"
+			>
+		<s:itemRenderer>
+			<fx:Component>
+				<s:IconItemRenderer label="{data.firstName} {data.lastName}"
+								messageField="title">
+				</s:IconItemRenderer>
+			</fx:Component>
+		</s:itemRenderer>
+	</s:List>
+	
+</s:View>

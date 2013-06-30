@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" title="BalanceEntry"
+		initialize="{balanceObj = new CustomerBalanceVO();trace(''+ObjectUtil.toString(data));}">
+	<s:layout>
+		<s:VerticalLayout horizontalAlign="center" verticalAlign="middle"/>
+	</s:layout>
+	<fx:Script>
+		<![CDATA[
+			import dao.CustomerBalanceVO;
+			import dao.CustomerDAO;
+			import dao.EmployeeDAO;
+			
+			import mx.utils.ObjectUtil;
+			
+			import spark.components.calendarClasses.DateSelectorDisplayMode;
+			[Bindable]private var balanceObj:CustomerBalanceVO;
+			
+			private function saveBalance():void
+			{
+				if(balanceObj.balanceAmt==null || balanceObj.balanceAmt.length==0 || parseFloat(balanceObj.balanceAmt)==0)
+				{
+					//show validation error
+				}else
+				{
+					//insert entry into db	
+					
+					var balanceObj:CustomerBalanceVO = new CustomerBalanceVO();
+					balanceObj.balanceAmt = balanceObj.balanceAmt;
+					balanceObj.billAmt = balanceObj.billAmt;
+					balanceObj.customerId = data.id;//rename to customerId
+					balanceObj.invoiceId = ""//blank 
+					balanceObj.orderId = ""//blank 
+					balanceObj.paidAmt = balanceObj.paidAmt;
+					balanceObj.purchaseDate = balanceDatePicker.selectedDate.toString();
+					
+					
+					var currentCustomerObj:CustomerDAO = new CustomerDAO();
+					//currentCustomerObj.insertCustomerBalanceRecord(balanceObj);
+				}
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<s:DateTimeFormatter id="dbDateTimeFormatter"/>
+	</fx:Declarations>
+	<s:navigationContent>
+		<s:Button label="Back" click="{navigator.pushView(CustomerBalanceDetails,null);}"/>
+	</s:navigationContent>
+	
+	<s:actionContent>
+		<s:Button label="Done" click="{saveBalance();}"/>
+	</s:actionContent>    
+	
+	<s:DateSpinner id="balanceDatePicker" maxDate="{new Date()}" 
+				   displayMode="{CustomerDataModel.getInstance().setting.uiDisplayDateFormat}"/>
+	
+	<s:VGroup horizontalAlign="left">
+		<s:Label text="Bill Amt:"/>
+		<s:TextInput text="@{balanceObj.billAmt}" width="180" textAlign="right" 
+					 change="{balAmtText.text = (parseFloat(balanceObj.billAmt)-parseFloat(balanceObj.paidAmt)).toString()}"
+					 restrict="0-9"/>
+	</s:VGroup>
+	<s:VGroup horizontalAlign="left">
+		<s:Label text="Paid Amt:"/>
+		<s:TextInput text="@{balanceObj.paidAmt}" width="180" textAlign="right"
+					 change="{balAmtText.text  = (parseFloat(balanceObj.billAmt)-parseFloat(balanceObj.paidAmt)).toString()}"
+					 restrict="0-9"/>
+	</s:VGroup>
+	<s:TextInput width="180" textAlign="right"
+				 editable="false" id="balAmtText" text="@{balanceObj.balanceAmt}"/>
+</s:View>

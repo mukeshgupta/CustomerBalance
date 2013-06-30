@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" title="CustomerDetails" xmlns:mx="library://ns.adobe.com/flex/mx">
+	<s:layout>
+		<s:VerticalLayout gap="10" paddingTop="10" paddingLeft="10" paddingRight="10" />
+   </s:layout>
+	<fx:Script>
+		<![CDATA[
+			import dao.Customer;
+			import dao.CustomerDAO;
+			[Bindable]private var customerObj:Customer;
+			private function validateCustomerDetails():void
+			{
+				
+			}
+			
+			private function insertCustomerDetail
+			{
+				var customerDao:CustomerDAO = new CustomerDAO();
+				var newCustomer:Customer = new Customer();
+				newCustomer.firstName = customerObj.firstName ;
+				newCustomer.lastName = customerObj.lastName ;
+				newCustomer.title = customerObj.title ;
+				newCustomer.email = customerObj.email ;
+				customerDao.createCustomerRecord(newCustomer);
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<fx:Array>
+			<mx:StringValidator />
+		</fx:Array>
+	</fx:Declarations>
+	<s:actionContent>
+		<s:Button label="Save" click="{validateCustomerDetails();}"/>
+	</s:actionContent>
+	
+	<s:Label text="First Name:"/>
+	<s:TextInput text="@{customerObj.firstName}" width="180" textAlign="left" />
+	
+	<s:Label text="Last Name:"/>
+	<s:TextInput text="@{customerObj.lastName}" width="180" textAlign="left" />
+	
+	<s:Label text="Title:"/>
+	<s:TextInput text="@{customerObj.title}" width="180" textAlign="left" />
+
+	<s:Label text="Email:"/>
+	<s:TextInput text="@{customerObj.email}" width="180" textAlign="left" />
+
+</s:View>

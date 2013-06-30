@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:TabbedViewNavigatorApplication xmlns:fx="http://ns.adobe.com/mxml/2009" 
+								  xmlns:s="library://ns.adobe.com/flex/spark" applicationDPI="160"
+								  creationComplete="{initApp()}">
+	<s:ViewNavigator label="Customer" width="100%" height="100%" firstView="views.CustomerDirectoryHomeView"/>
+	<s:ViewNavigator label="Setting" width="100%" height="100%" firstView="views.SettingView"/>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import dao.CustomerDAO;
+			private function initApp():void
+			{
+				loadSetting();
+				loadCustomersList();
+			}
+			
+			private function loadSetting():void
+			{
+				
+			}
+			private function loadCustomersList():void
+			{
+			
+			}
+		]]>
+	</fx:Script>
+</s:TabbedViewNavigatorApplication>
+
+<!--<?xml version="1.0" encoding="utf-8"?>
+<s:ViewNavigatorApplication xmlns:fx="http://ns.adobe.com/mxml/2009" 
+							xmlns:s="library://ns.adobe.com/flex/spark" 
+							firstView="views.EmployeeDirectoryHomeView">
+	<s:navigationContent>
+		<s:Button icon="@Embed('assets/home.png')" 
+				  click="navigator.popToFirstView()"/>
+	</s:navigationContent>
+	
+</s:ViewNavigatorApplication>-->
+
+

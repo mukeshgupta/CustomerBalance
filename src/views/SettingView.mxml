@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" title="SettingView">
+	<s:layout>
+		<s:VerticalLayout gap="10" paddingTop="10" paddingLeft="10" paddingRight="10" />
+	</s:layout>
+	
+	<s:BorderContainer borderVisible="true" mouseChildren="false" mouseEnabled="true" width="100%">
+		<s:layout>
+			<s:VerticalLayout/>
+		</s:layout>		
+		<s:Label text="Date Format:"/>
+		<s:Label text="{CustomerDataModel.getInstance().setting.uiDisplayDateFormat}"/>
+	</s:BorderContainer>
+	
+</s:View>
